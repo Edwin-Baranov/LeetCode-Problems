@@ -1,15 +1,11 @@
-class WordNode {
-    Map<Character, WordNode> children = new HashMap();
-    boolean isWord = false;
-    public WordNode() {}
-}
-
 class WordDictionary {
-    WordNode storage;
-
-    public WordDictionary() {
-        storage = new WordNode();
+    class WordNode {
+        Map<Character, WordNode> children = new HashMap();
+        boolean isWord = false;
+        public WordNode() {}
     }
+    
+    private WordNode storage = new WordNode();
     
     public void addWord(String word) {
         WordNode pointer = storage;
