@@ -5,7 +5,11 @@ class WordDictionary {
         public WordNode() {}
     }
     
-    private WordNode storage = new WordNode();
+    private WordNode storage;
+
+    public WordDictionary() {
+        storage = new WordNode();
+    }
     
     public void addWord(String word) {
         WordNode pointer = storage;
