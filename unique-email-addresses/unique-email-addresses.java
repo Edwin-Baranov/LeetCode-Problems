@@ -1,20 +1,35 @@
 class Solution {
     public int numUniqueEmails(String[] emails) {
         Set<String> emailSet = new HashSet<String>();
-        
+
         for (String email : emails) {
-            String[] emailParts = email.split("@", 2);
-            
-            int plusIndex = emailParts[0].indexOf("+");
-            if (plusIndex > 0) {
-                emailParts[0] = emailParts[0].substring(0, plusIndex);
+            StringBuilder filteredEmail = new StringBuilder();
+
+            boolean charIgnore = false;
+            boolean isLocalName = true;
+
+            for(char c : email.toCharArray()) {
+                if (c == '+' && isLocalName) {
+                    charIgnore = true;
+                }
+
+                if (c == '@') {
+                    charIgnore = false;
+                    isLocalName = false;
+                }
+
+                if (charIgnore) {
+                    continue;
+                }
+
+                if (c != '.' || !isLocalName) {
+                    filteredEmail.append(c);
+                }
             }
-            
-            emailParts[0] = emailParts[0].replace(".", "");
-            
-            emailSet.add(emailParts[0] + '@' + emailParts[1]);
+
+            emailSet.add(filteredEmail.toString());
         }
-        
+
         return emailSet.size();
     }
 }
