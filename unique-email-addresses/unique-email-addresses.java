@@ -3,31 +3,16 @@ class Solution {
         Set<String> emailSet = new HashSet<String>();
         
         for (String email : emails) {
-            StringBuilder filteredEmail = new StringBuilder();
+            String[] emailParts = email.split("@", 2);
             
-            boolean charIgnore = false;
-            boolean isLocalName = true;
-            
-            for(char c : email.toCharArray()) {
-                if (c == '+' && isLocalName) {
-                    charIgnore = true;
-                }
-                
-                if (c == '@') {
-                    charIgnore = false;
-                    isLocalName = false;
-                }
-                
-                if (charIgnore) {
-                    continue;
-                }
-                
-                if (c != '.' || !isLocalName) {
-                    filteredEmail.append(c);
-                }
+            int plusIndex = emailParts[0].indexOf("+");
+            if (plusIndex > 0) {
+                emailParts[0] = emailParts[0].substring(0, plusIndex);
             }
             
-            emailSet.add(filteredEmail.toString());
+            emailParts[0] = emailParts[0].replace(".", "");
+            
+            emailSet.add(emailParts[0] + '@' + emailParts[1]);
         }
         
         return emailSet.size();
