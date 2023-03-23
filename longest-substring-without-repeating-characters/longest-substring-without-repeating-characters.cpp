@@ -1,25 +1,18 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        std::unordered_set<char> charSet;
+        unordered_map<char, int> charIndex;
 
-        int leftPointer = 0, rightPointer;
-        int result = 0;
-
-        for (rightPointer = 0; rightPointer < s.length(); rightPointer++) {
-            char rightChar = s[rightPointer];
-
-            while (charSet.find(rightChar) != charSet.end()) {
-                char leftChar = s[leftPointer];
-                charSet.erase(leftChar);
-                leftPointer++;
+        int answer = 0;
+        int left = -1;
+        for(int right = 0; right < s.length(); right++) {
+            if(charIndex.find(s[right]) != charIndex.end() && charIndex[s[right]] > left) {
+               left = charIndex[s[right]];
             }
-
-            charSet.insert(rightChar);
-
-            result = std::max(result, static_cast<int>(charSet.size()));
+            answer = max(answer, right - left);
+            charIndex[s[right]] = right;
         }
 
-        return result;
+        return answer;
     }
 };
