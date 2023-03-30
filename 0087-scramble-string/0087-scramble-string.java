@@ -6,7 +6,7 @@ class Solution {
         if (s1.length() != s2.length())
             return false;
         
-        final String hashedKey = s1 + "+" + s2;
+        final String hashedKey = s1 + s2;
         
         if (memo.containsKey(hashedKey))
             return memo.get(hashedKey);
