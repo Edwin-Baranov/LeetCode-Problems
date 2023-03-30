@@ -1,26 +1,45 @@
 class Solution {
-    Map<String,Boolean> mem = new HashMap<>();
-    
     public boolean isScramble(String s1, String s2) {
-        if(s1.equals(s2))
+        if (s1.equals(s2))
             return true;
-        if(s1.length() != s2.length())
-            return false;
-        String key = s1 + s2;
-        if(mem.containsKey(key))
-            return mem.get(key);
         
-        int n = s1.length();
-        for(int i=1; i<n; ++i) {
-            boolean solve1 = isScramble(s1.substring(0,i),s2.substring(n-i)) && isScramble(s1.substring(i),s2.substring(0,n-i));
-            boolean solve2 = isScramble(s1.substring(0,i),s2.substring(0,i)) && isScramble(s1.substring(i),s2.substring(i));
-            
-            if(solve1 || solve2) {
-                mem.put(key,true);
+        if (s1.length() != s2.length())
+            return false;
+        
+        final String hashedKey = s1 + "+" + s2;
+        
+        if (memo.containsKey(hashedKey))
+            return memo.get(hashedKey);
+
+        int[] count = new int[26];
+
+        for (int i = 0; i < s1.length(); ++i) {
+            ++count[s1.charAt(i) - 'a'];
+            --count[s2.charAt(i) - 'a'];
+        }
+
+        for (final int c : count)
+            if (c != 0) {
+                memo.put(hashedKey, false);
+                return false;
+            }
+
+        for (int i = 1; i < s1.length(); ++i) {
+            if (isScramble(s1.substring(0, i), s2.substring(0, i)) &&
+                isScramble(s1.substring(i), s2.substring(i))) {
+                memo.put(hashedKey, true);
+                return true;
+            }
+            if (isScramble(s1.substring(0, i), s2.substring(s2.length() - i)) &&
+                isScramble(s1.substring(i), s2.substring(0, s2.length() - i))) {
+                memo.put(hashedKey, true);
                 return true;
             }
         }
-        mem.put(key,false);
+
+        memo.put(hashedKey, false);
         return false;
     }
+
+    private Map<String, Boolean> memo = new HashMap<>();
 }
