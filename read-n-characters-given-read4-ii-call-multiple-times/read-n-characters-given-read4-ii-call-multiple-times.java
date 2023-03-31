@@ -4,26 +4,28 @@
  */
 
 public class Solution extends Reader4 {
+    private int buffPointer = 0;
+    private int readCount = 0;
+    private char[] buff = new char[4];
     /**
      * @param buf Destination buffer
      * @param n   Number of characters to read
      * @return    The number of actual characters read
      */
-    private int buffPtr = 0;
-    private int buffCnt = 0;
-    private char[] buff = new char[4];
     public int read(char[] buf, int n) {
-        int ptr = 0;
-        while (ptr < n) {
-            if (buffPtr == 0) {
-                buffCnt = read4(buff);
+        int writingPtr = 0;
+        while (writingPtr < n) {
+            if (buffPointer == 0) {
+                readCount = read4(buff);
             }
-            if (buffCnt == 0) break;
-            while (ptr < n && buffPtr < buffCnt) {
-                buf[ptr++] = buff[buffPtr++];
+            if (readCount == 0) break;
+            while (writingPtr < n && buffPointer < readCount) {
+                buf[writingPtr] = buff[buffPointer];
+                ++writingPtr;
+                ++buffPointer;
             }
-            if (buffPtr >= buffCnt) buffPtr = 0;
+            if (buffPointer >= readCount) buffPointer = 0;
         }
-        return ptr;
+        return writingPtr;
     }
 }
