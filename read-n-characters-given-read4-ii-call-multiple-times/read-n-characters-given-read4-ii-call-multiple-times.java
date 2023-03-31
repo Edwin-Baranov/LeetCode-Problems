@@ -6,7 +6,7 @@
 public class Solution extends Reader4 {
     private int buffPointer = 0;
     private int readCount = 0;
-    private char[] buff = new char[4];
+    private char[] storage = new char[4];
     /**
      * @param buf Destination buffer
      * @param n   Number of characters to read
@@ -16,11 +16,11 @@ public class Solution extends Reader4 {
         int writingPtr = 0;
         while (writingPtr < n) {
             if (buffPointer == 0) {
-                readCount = read4(buff);
+                readCount = read4(storage);
             }
             if (readCount == 0) break;
             while (writingPtr < n && buffPointer < readCount) {
-                buf[writingPtr] = buff[buffPointer];
+                buf[writingPtr] = storage[buffPointer];
                 ++writingPtr;
                 ++buffPointer;
             }
