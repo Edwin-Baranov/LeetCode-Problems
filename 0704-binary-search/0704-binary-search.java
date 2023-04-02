@@ -4,7 +4,7 @@ class Solution {
         int right = nums.length - 1;
         
         while (left <= right) {
-            int pointer = left + (right - left) / 2;
+            int pointer = (left + right) / 2;
             if (nums[pointer] == target)
                 return pointer;
             
