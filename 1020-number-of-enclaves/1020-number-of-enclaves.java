@@ -6,10 +6,13 @@ class Solution {
         int landCount = 0;
         
         for (int y = 0; y < n; ++y) {
-            for (int x = 0; x < m; ++x) {
-                if (y == 0 || y == n-1 || x == 0 || x == m-1)
-                    removeConnected(y, x, n, m, grid);
-            }
+            removeConnected(y, 0, n, m, grid);
+            removeConnected(y, m-1, n, m, grid);
+        }
+        
+        for (int x = 0; x < m; ++x) {
+            removeConnected(0, x, n, m, grid);
+            removeConnected(n-1, x, n, m, grid);
         }
         
         for (int y = 0; y < n; ++y) {
