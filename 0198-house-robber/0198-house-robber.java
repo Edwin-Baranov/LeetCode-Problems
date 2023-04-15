@@ -1,19 +1,15 @@
 class Solution {
-    int[] memo;
-    int[] nums;
     public int rob(int[] nums) {
-        memo = new int[nums.length];
-        Arrays.fill(memo, -1);
-        this.nums = nums;
-        return dp(nums.length-1);
-    }
-    
-    private int dp(int i) {
-        if (i == 0) return nums[0];
-        if (i == 1) return Math.max(nums[0], nums[1]);
-        if (memo[i] == -1) {
-            memo[i] = Math.max(dp(i-1), dp(i-2) + nums[i]);
+        if (nums.length == 1) return nums[0];
+        
+        int[] dp = new int[nums.length];
+        dp[0]=nums[0];
+        dp[1] = Math.max(nums[0], nums[1]);
+        
+        for (int i = 2; i < nums.length; ++i) {
+            dp[i] = Math.max(nums[i] + dp[i-2], dp[i-1]);
         }
-        return memo[i];
+        
+        return dp[nums.length - 1];
     }
 }
