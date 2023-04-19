@@ -9,23 +9,15 @@ class Solution {
             maxNum = Math.max(maxNum, num);
         }
         
-        return maxPoints(maxNum);
-    }
-    
-    private int maxPoints(int num) {
-        if (num == 0) {
-            return 0;
+        int temp1 = 0;
+        int temp2 = points.getOrDefault(1, 0);
+        
+        for (int i = 2; i <= maxNum; ++i) {
+            int newMax = Math.max(temp2, temp1 + points.getOrDefault(i, 0));
+            temp1 = temp2;
+            temp2 = newMax;
         }
         
-        if (num == 1) {
-            return points.getOrDefault(1, 0);
-        }
-        
-        if (cache.containsKey(num)) {
-            return cache.get(num);
-        }
-        
-        cache.put(num, Math.max(maxPoints(num-1), points.getOrDefault(num, 0) + maxPoints(num - 2)));
-        return cache.get(num);
+        return temp2;
     }
 }
