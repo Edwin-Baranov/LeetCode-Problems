@@ -15,14 +15,16 @@ class Solution {
         
         for (int i = 1; i < elements.size(); ++i) {
             int currentElement = elements.get(i);
-            int temp = oneBack;
+            int newMax;
             
             if(currentElement == elements.get(i - 1) + 1) {
-                oneBack = Math.max(oneBack, twoBack + points.get(currentElement));
+                newMax = Math.max(oneBack, twoBack + points.get(currentElement));
             } else {
-                oneBack += points.get(currentElement);
+                newMax = oneBack + points.get(currentElement);
             }
-            twoBack = temp;
+            
+            twoBack = oneBack;
+            oneBack = newMax;
         }
         
         return oneBack;
