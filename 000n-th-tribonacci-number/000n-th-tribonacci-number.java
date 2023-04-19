@@ -7,13 +7,16 @@ class Solution {
             return 1;
         }
         
-        int[] db = new int[n+1];
+        int[] db = new int[3];
         db[1] = db[2] = 1;
         
         for (int i = 3; i <= n; ++i) {
-            db[i] = db[i-1] + db[i-2] + db[i-3];
+            int temp = db[0] + db[1] + db[2];
+            db[0] = db[1];
+            db[1] = db[2];
+            db[2] = temp;
         }
         
-        return db[n];
+        return db[2];
     }
 }
