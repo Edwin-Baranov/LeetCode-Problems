@@ -1,6 +1,6 @@
 class Solution {
     public int numOfMinutes(int n, int headID, int[] manager, int[] informTime) {
-        List<Integer>[] subordinates = new List[n];
+        List<Integer>[] subordinates = new ArrayList[n];
         
         for (int i = 0; i < n; ++i) {
                 subordinates[i] = new ArrayList<>();
