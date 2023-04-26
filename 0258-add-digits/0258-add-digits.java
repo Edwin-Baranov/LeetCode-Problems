@@ -1,11 +1,7 @@
 class Solution {
     public int addDigits(int num) {
-        int result = 0;
-        String sNum = Integer.toString(num);
-        
-        for (int i = 0; i < sNum.length(); ++i) {
-            result += sNum.charAt(i) - '0';
-        }
-        return result < 10 ? result : addDigits(result);
+        if (num == 0) return 0;
+        if (num % 9 == 0) return 9;
+        return num % 9;
     }
 }
