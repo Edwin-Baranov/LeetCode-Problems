@@ -6,7 +6,7 @@ class Solution {
             if (num == 0)
                 return 0;
             
-            if (Math.signum(num) < 0)
+            if (num < 0)
                 ++negativeCount;
         }
         
