@@ -1,8 +1,8 @@
 class Solution {
     public List<List<Integer>> findDifference(int[] nums1, int[] nums2) {
         List<List<Integer>> answer = new ArrayList<>(2);
-        answer.add(0, new LinkedList<Integer>());
-        answer.add(1, new LinkedList<Integer>());
+        answer.add(0, new ArrayList<Integer>());
+        answer.add(1, new ArrayList<Integer>());
         
         Set<Integer> numSet1 = new HashSet<>();
         Set<Integer> numSet2 = new HashSet<>();
