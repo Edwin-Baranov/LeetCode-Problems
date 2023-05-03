@@ -16,15 +16,13 @@ class Solution {
         }
         
         for (int value1 : numSet1) {
-            if (numSet2.contains(value1)) {
-                numSet2.remove(value1);
-            } else {
+            if (!numSet2.contains(value1))
                 answer.get(0).add(value1);
-            }
         }
         
         for (int value2 : numSet2) {
-            answer.get(1).add(value2);
+            if (!numSet1.contains(value2))
+                answer.get(1).add(value2);
         }
         
         return answer;
