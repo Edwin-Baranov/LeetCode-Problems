@@ -1,41 +1,27 @@
 class Solution {
     public String predictPartyVictory(String senate) {
-        
-        // Number of Senator
+        Queue<Integer> q1 = new LinkedList<Integer>();
+        Queue<Integer> q2 = new LinkedList<Integer>();
         int n = senate.length();
-
-        // Queues with Senator's Index.
-        // Index will be used to find the next turn of Senator
-        Queue<Integer> rQueue = new LinkedList<>();
-        Queue<Integer> dQueue = new LinkedList<>();
-
-        // Populate the Queues
-        for (int i = 0; i < n; i++) {
-            if (senate.charAt(i) == 'R') {
-                rQueue.add(i);
+        
+        for(int i = 0; i<n; i++){
+            if(senate.charAt(i) == 'R') {
+                q1.add(i);
             } else {
-                dQueue.add(i);
+                q2.add(i);
             }
         }
-
-        // While both parties have at least one Senator
-        while (!rQueue.isEmpty() && !dQueue.isEmpty()) {
+        
+        while(!q1.isEmpty() && !q2.isEmpty()) {
+            int r_index = q1.poll();
+            int d_index = q2.poll();
             
-            // Pop the Next-Turn Senate from both Q.
-            int rTurn = rQueue.poll();
-            int dTurn = dQueue.poll();
-
-            // ONE having a larger index will be banned by a lower index
-            // Lower index will again get Turn, so EN-Queue again
-            // But ensure its turn comes in the next round only
-            if (dTurn < rTurn) {
-                dQueue.add(dTurn + n);
+            if(r_index < d_index) {
+                q1.add(r_index + n);
             } else {
-                rQueue.add(rTurn + n);
+                q2.add(d_index + n);
             }
         }
-
-        // One's which Empty is not winner
-        return rQueue.isEmpty() ? "Dire" : "Radiant";
+        return (q1.size() > q2.size()) ? "Radiant" : "Dire";
     }
 }
