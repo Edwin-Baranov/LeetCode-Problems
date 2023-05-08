@@ -6,9 +6,13 @@ class Solution {
         int[] count = new int[26];
         for (int i = 0; i < s.length(); ++i) {
             int diff = (t.charAt(i) - s.charAt(i) + 26) % 26;
-            if (diff > 0 && diff + count[diff] * 26 > k) {
+            
+            if (diff == 0)
+                continue;
+            
+            if (diff + count[diff] * 26 > k)
                 return false;
-            }
+            
             ++count[diff];
         }
         return true;
