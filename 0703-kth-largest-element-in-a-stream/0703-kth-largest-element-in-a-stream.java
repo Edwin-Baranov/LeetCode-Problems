@@ -7,11 +7,7 @@ class KthLargest {
         heap = new PriorityQueue<>();
         
         for (int num: nums) {
-            heap.offer(num);
-        }
-        
-        while (heap.size() > k) {
-            heap.poll();
+            this.add(num);
         }
     }
     
