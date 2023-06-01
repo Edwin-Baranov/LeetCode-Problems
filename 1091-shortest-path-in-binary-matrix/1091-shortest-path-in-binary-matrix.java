@@ -7,31 +7,30 @@ class Solution {
             return -1;
         }
         
-        int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
-        boolean[][] isVisited = new boolean[n][n];
-        Deque<int[]> dq = new ArrayDeque<>();
-        dq.add(new int[]{0, 0});
-        isVisited[0][0] = true;
-        int count = 1;
-        while (!dq.isEmpty()) {
-            int size = dq.size();
-            for (int i = 0; i < size; i++) {
-                int[] curr = dq.poll();
+        int[][] directions = new int[][]{{1, 1}, {1, 0}, {0, 1}, {1, -1}, {-1, 1}, {0, -1}, {-1, 0}, {-1, -1}};
+        
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[]{0, 0});
+        grid[0][0] = 1;
+        
+        while (!queue.isEmpty()) {
+            int[] curr = queue.poll();
+            int row = curr[0];
+            int column = curr[1];
                 
-                if (curr[0] == n - 1 && curr[1] == n - 1) {
-                    return count;
-                }
-                for (int[] direction : directions) {
-                    int x = curr[0] + direction[0];
-                    int y = curr[1] + direction[1];
-                    if (x < 0 || x >= n || y < 0 || y >= n || grid[x][y] == 1 || isVisited[x][y]) {
-                        continue;
-                    }
-                    dq.add(new int[]{x, y});
-                    isVisited[x][y] = true;
-                }
+            if (row == n - 1 && column == n - 1) {
+                return grid[row][column];
             }
-            count++;
+            
+            for (int[] direction : directions) {
+                int y = curr[0] + direction[0];
+                int x = curr[1] + direction[1];
+                if (y < 0 || y >= n || x < 0 || x >= n || grid[y][x] > 0) {
+                    continue;
+                }
+                grid[y][x] = grid[row][column] + 1;
+                queue.add(new int[] {y, x});
+            }
         }
         return -1;
     }
