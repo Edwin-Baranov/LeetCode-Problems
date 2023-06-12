@@ -5,29 +5,23 @@ class Solution {
         if (nums.length == 0)
             return result;
         
-        int left = 0;
-        int right = 0;        
+        int left = nums[0];
+        int right = nums[0];        
         
-        for (int i = 0; i < nums.length; ++i) {
-            if (nums[i] > nums[right] + 1) {
-                writeRange(left, right, nums, result);
-                left = i;
-                right = i;
+        for (int i = 1; i < nums.length; ++i) {
+            int current = nums[i];
+            if (current > right + 1) {
+                result.add(left == right ? Integer.toString(left) : String.format("%d->%d", left, right));
+                
+                left = current;
+                right = current;
             } else {
-                right = i;
+                right = current;
             }
         }
         
-        writeRange(left, right, nums, result);
+        result.add(left == right ? Integer.toString(left) : String.format("%d->%d", left, right));
         
         return result;
-    }
-    
-    private void writeRange(int left, int right, int[] data, List<String> result) {
-        if (data[left] == data[right]) {
-            result.add(String.valueOf(data[left]));
-        } else {
-            result.add(data[left] + "->" + data[right]);
-        }
     }
 }
