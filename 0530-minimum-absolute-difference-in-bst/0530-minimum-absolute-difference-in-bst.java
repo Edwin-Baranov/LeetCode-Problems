@@ -14,29 +14,29 @@
  * }
  */
 class Solution {
-    // List to store the node values.
-    ArrayList<Integer> nodeValues = new ArrayList<>();
-
-    void dfs(TreeNode node) {
+    // List to store the tree nodes in the inorder traversal.
+    List<Integer> inorderNodes = new ArrayList<>();
+    
+    void inorderTraversal(TreeNode node) {
         if (node == null) {
             return;
         }
-
-        nodeValues.add(node.val);
-        dfs(node.left);
-        dfs(node.right);
-    }
-
-    int getMinimumDifference(TreeNode root) {
-        dfs(root);
-
-        Collections.sort(nodeValues);
-        int minDifference = Integer.MAX_VALUE;
         
-        for (int i = 1; i < nodeValues.size(); ++i) {
-            minDifference = Math.min(minDifference, nodeValues.get(i) - nodeValues.get(i - 1));
+        inorderTraversal(node.left);
+        // Store the nodes in the list.
+        inorderNodes.add(node.val);
+        inorderTraversal(node.right);
+    }
+    
+    int getMinimumDifference(TreeNode root) {
+       inorderTraversal(root);
+        
+        int minDifference = Integer.MAX_VALUE;
+        // Find the diff between every two consecutive values in the list.
+        for (int i = 1; i < inorderNodes.size(); i++) {
+            minDifference = Math.min(minDifference, inorderNodes.get(i) - inorderNodes.get(i-1));
         }
-
+        
         return minDifference;
     }
 };
