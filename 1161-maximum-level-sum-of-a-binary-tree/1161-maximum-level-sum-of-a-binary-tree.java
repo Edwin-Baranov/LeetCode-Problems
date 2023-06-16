@@ -21,7 +21,7 @@ class Solution {
         Queue<TreeNode> currentQueue = new LinkedList<>();
         Queue<TreeNode> nextQueue = new LinkedList<>();
         
-        currentQueue.add(root);
+        currentQueue.offer(root);
         
         while(!currentQueue.isEmpty()) {
             
@@ -32,8 +32,8 @@ class Solution {
                 }
                 sum += node.val;
                 
-                if(node.left != null) nextQueue.add(node.left);
-                if(node.right != null) nextQueue.add(node.right);
+                if(node.left != null) nextQueue.offer(node.left);
+                if(node.right != null) nextQueue.offer(node.right);
             }
             
             if (sum > maximal) {
