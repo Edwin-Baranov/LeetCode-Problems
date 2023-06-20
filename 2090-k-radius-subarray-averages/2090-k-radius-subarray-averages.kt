@@ -4,30 +4,25 @@ class Solution {
             return nums
         }
         
-        val subSize = k * 2 + 1
-        val leftIndex = k
-        val rightIndex = nums.size - k        
+        val windowSize = 2 * k + 1
+        val rightIndex = windowSize - 1
         val result = IntArray(nums.size) {-1}
         
         var leftWindow = 0
-        var rightWindow = (leftIndex * 2)
-        var sum : Long = 0
+        var leftIndex = k
+        var sum = 0L
         
-        if (2 * k + 1 > nums.size) {
+        if (windowSize > nums.size) {
             return result
         }
         
-        for (i in leftWindow until rightWindow + 1) {
+        for (i in nums.indices) {
             sum += nums[i]
-        }
-        
-        result[leftIndex] = (sum / subSize).toInt()
-        
-        for (i in leftIndex + 1 until rightIndex) {
-            sum -= nums[leftWindow++]
-            sum += nums[++rightWindow]
             
-            result[i] = (sum / subSize).toInt()
+            if (i >= rightIndex) {
+                result[leftIndex++] = (sum / windowSize).toInt()
+                sum -= nums[leftWindow++]
+            }
         }
         
         return result
