@@ -1,12 +1,8 @@
 class Solution {
     fun getAverages(nums: IntArray, k: Int): IntArray {
-        if (k == 0) {
-            return nums
-        }
-        
         val windowSize = 2 * k + 1
         val rightIndex = windowSize - 1
-        val result = IntArray(nums.size) {-1}
+        val result = IntArray(nums.size) { -1 }
         
         var leftWindow = 0
         var leftIndex = k
