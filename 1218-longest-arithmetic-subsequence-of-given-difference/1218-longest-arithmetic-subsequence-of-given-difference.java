@@ -4,14 +4,9 @@ class Solution {
         int result = 1;
         
         for (int value : arr) {
-            int prev = value - difference;
-            if (mem.containsKey(prev)) {
-                int count = mem.get(prev) + 1;
-                mem.put(value, count);
-                result = Math.max(result, count);
-            } else {
-                mem.put(value, 1);
-            }
+            int prev = mem.getOrDefault(value - difference, 0);
+            mem.put(value, prev + 1);
+            result = Math.max(result, mem.get(value));
         }
         return result;
     }
