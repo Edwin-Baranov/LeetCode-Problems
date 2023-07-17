@@ -14,12 +14,14 @@ class Solution {
         Stack<Integer> s2 = new Stack<>();
         Stack<Integer> sumStack = new Stack<>();
         
-        for (ListNode i = l1; i != null; i = i.next) {
-            s1.push(i.val);
+        while (l1 != null) {
+            s1.push(l1.val);
+            l1 = l1.next;
         }
         
-        for (ListNode i = l2; i != null; i = i.next) {
-            s2.push(i.val);
+        while (l2 != null) {
+            s2.push(l2.val);
+            l2 = l2.next;
         }
         
         int carry = 0;
