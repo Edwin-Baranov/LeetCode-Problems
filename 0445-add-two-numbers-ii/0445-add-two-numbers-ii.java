@@ -15,11 +15,11 @@ class Solution {
         Stack<Integer> sumStack = new Stack<>();
         
         for (ListNode i = l1; i != null; i = i.next) {
-            s1.add(i.val);
+            s1.push(i.val);
         }
         
         for (ListNode i = l2; i != null; i = i.next) {
-            s2.add(i.val);
+            s2.push(i.val);
         }
         
         int carry = 0;
@@ -29,7 +29,7 @@ class Solution {
             sum += s2.isEmpty() ? 0 : s2.pop();
             sum += carry;
             
-            sumStack.add(sum % 10);
+            sumStack.push(sum % 10);
             carry = sum / 10;
         }
         
