@@ -1,16 +1,15 @@
 class Solution {
     public int jump(int[] nums) {
-        int result = 0;
+        int answer = 0, n = nums.length;
+        int curEnd = 0, curFar = 0;
         
-        for (int i = 0, target = 0, maxDistance = nums[0]; i <= target; ++i) {
-            if (target >= nums.length - 1) break;
-            maxDistance = Math.max(maxDistance, i + nums[i]);
-            
-            if (i == target) {
-                ++result;
-                target = maxDistance;
+        for (int i = 0; i < n - 1; ++i) {
+            curFar = Math.max(curFar, i + nums[i]);
+            if (i == curEnd) {
+                answer++;
+                curEnd = curFar;
             }
         }
-        return result;
+        return answer;
     }
 }
