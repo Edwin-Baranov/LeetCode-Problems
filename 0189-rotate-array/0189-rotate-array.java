@@ -1,6 +1,11 @@
 class Solution {
     public void rotate(int[] nums, int k) {
         int n = nums.length;
+        
+        if (k % n == 0) {
+            return;
+        }
+        
         int count = 0;
         
         for (int start = 0; count < n; start++) {
