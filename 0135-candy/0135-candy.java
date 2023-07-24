@@ -18,6 +18,10 @@ class Solution {
             }
         }
         
-        return Arrays.stream(candies).sum();
+        for (int count : candies) {
+            result += count;
+        }
+        
+        return result;
     }
 }
