@@ -7,13 +7,13 @@ class Solution {
         
         int i = 0, j = 0;
         
-        while(j < n && i < m) {
-            if (j < n && s.charAt(j) == t.charAt(i))
-                j++;
+        while(i < n && j < m) {
+            if (i < n && s.charAt(i) == t.charAt(j))
+                i++;
             
-            i++;
+            j++;
         }
         
-        return j == n;
+        return i == n;
     }
 }
