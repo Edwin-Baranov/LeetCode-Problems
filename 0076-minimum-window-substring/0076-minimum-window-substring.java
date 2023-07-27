@@ -1,36 +1,47 @@
 class Solution {
     public String minWindow(String s, String t) {
         Map<Character, Integer> neededChars = new HashMap();
-        Map<Character, Integer> seenChars = new HashMap();
+        List<Pair<Character, Integer>> seenChars = new ArrayList();
         int left = 0, right = 0;
         int minLeft = 0, minRight = 0;
         int subLength = -1;
         int m = s.length();
         
         for (char c : t.toCharArray()) {
-            neededChars.put(c, neededChars.getOrDefault(c, 0) + 1);
+            neededChars.put(c, neededChars.getOrDefault(c,0) + 1);
+        }
+        
+        for (int i = 0; i < m; i++) {
+            char c = s.charAt(i);
+            if (neededChars.containsKey(c)) {
+                seenChars.add(new Pair(c, i));
+            }
         }
         
         int conditionCount = neededChars.size();
         
-        while (right < m) {
-            char rChar = s.charAt(right);
-            seenChars.put(rChar, seenChars.getOrDefault(rChar,0) + 1);
+        int n = seenChars.size();
+        
+        while (right < n) {
+            char rChar = seenChars.get(right).getKey();
+            neededChars.put(rChar, neededChars.get(rChar) - 1);
             
-            if (neededChars.containsKey(rChar) && seenChars.get(rChar).intValue() == neededChars.get(rChar).intValue()) {
+            if (neededChars.get(rChar).intValue() == 0) {
                 conditionCount--;
             }
             
             while (left <= right && conditionCount == 0) {
-                if (subLength == -1 || right - left + 1 < subLength) {
-                    minLeft = left;
-                    minRight = right + 1;
+                int leftIndex = seenChars.get(left).getValue();
+                int rightIndex = seenChars.get(right).getValue();
+                if (subLength == -1 || rightIndex - leftIndex + 1 < subLength) {
+                    minLeft = leftIndex;
+                    minRight = rightIndex + 1;
                     subLength = minRight - minLeft;
                 }
                 
-                char lChar = s.charAt(left);
-                seenChars.put(lChar, seenChars.get(lChar) - 1);
-                if (seenChars.get(lChar) < neededChars.getOrDefault(lChar, 0)) {
+                char lChar = seenChars.get(left).getKey();
+                neededChars.put(lChar, neededChars.get(lChar) + 1);
+                if (neededChars.get(lChar).intValue() > 0) {
                     conditionCount++;
                 }
                 ++left;
