@@ -14,22 +14,12 @@ class Solution {
             }
         }
         
-        for (Integer index : rows.toArray(Integer[]::new)) {
-            zeroRow(matrix, index.intValue());
-        }
-        
-        for (Integer index : columns.toArray(Integer[]::new)) {
-            zeroColumn(matrix, index.intValue());
-        }
-    }
-    
-    private void zeroRow(int[][] matrix, int index) {
-        Arrays.fill(matrix[index], 0);
-    }
-    
-    private void zeroColumn(int[][] matrix, int index) {
-        for (int[] row : matrix) {
-            row[index] = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (rows.contains(i) || columns.contains(j)) {
+                    matrix[i][j] = 0;
+                }
+            }
         }
     }
 }
