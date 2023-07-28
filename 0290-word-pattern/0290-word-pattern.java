@@ -3,27 +3,25 @@ class Solution {
         int n = pattern.length();
         String[] words = s.split(" ");
         
-        Map<Character, String> charToWord = new HashMap();
-        Map<String, Character> wordToChar = new HashMap();
-        
         if (words.length != n)
             return false;
         
+        Map<String, Integer> indexMap = new HashMap();
+        
         for (int i = 0; i < n; i++) {
-            char c = pattern.charAt(i);
-            String word = words[i];
-            if (!charToWord.containsKey(c) && !wordToChar.containsKey(word)) {
-                charToWord.put(c, word);
-                wordToChar.put(word, c);
-            } else {
-                if (
-                    !charToWord.containsKey(c) ||
-                    !wordToChar.containsKey(word) ||
-                    !charToWord.get(c).equals(word) ||
-                    wordToChar.get(word) != c
-                   )
-                    return false;
+            String c = pattern.substring(i, i + 1);
+            String word = words[i] + " ";
+            
+            if (!indexMap.containsKey(c)) {
+                indexMap.put(c, i);
             }
+            
+            if (!indexMap.containsKey(word)) {
+                indexMap.put(word, i);
+            }
+            
+            if (indexMap.get(c).intValue() != indexMap.get(word).intValue())
+                return false;
         }
         return true;
     }
