@@ -6,11 +6,11 @@ class Solution {
         if (words.length != n)
             return false;
         
-        Map<String, Integer> indexMap = new HashMap();
+        HashMap indexMap = new HashMap();
         
-        for (int i = 0; i < n; i++) {
-            String c = pattern.substring(i, i + 1);
-            String word = words[i] + " ";
+        for (Integer i = 0; i < n; i++) {
+            char c = pattern.charAt(i);
+            String word = words[i];
             
             if (!indexMap.containsKey(c)) {
                 indexMap.put(c, i);
@@ -20,7 +20,7 @@ class Solution {
                 indexMap.put(word, i);
             }
             
-            if (indexMap.get(c).intValue() != indexMap.get(word).intValue())
+            if (indexMap.get(c) != indexMap.get(word))
                 return false;
         }
         return true;
