@@ -1,36 +1,39 @@
 class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
-        List<Integer> result = new LinkedList<>();
-        int rows = matrix.length;
-        int columns = matrix[0].length;
-        int left = 0, top = 0;
-        int right = matrix[0].length - 1, bottom = matrix.length - 1;
+        int m = matrix.length, n = matrix[0].length;
+        int size = m * n;
+        int top = 0, bottom = m - 1, left = 0, right = n - 1;
         
-        while (result.size() < rows * columns) {
-            for (int i = left; i <= right; ++i) {
-                result.add(matrix[top][i]);
+        List<Integer> result = new ArrayList(size);
+        
+        for (int i = 0; i < size; top++, bottom--, left++, right--) {
+            //top
+            for (int j = left; j <= right; j++) {
+                result.add(matrix[top][j]);
+                ++i;
             }
-        
-            for (int i = top + 1; i <= bottom; ++i) {
-                result.add(matrix[i][right]);
+            //right
+            for (int j = top + 1; j <= bottom; j++) {
+                result.add(matrix[j][right]);
+                ++i;
             }
             
             if (top != bottom) {
-                for (int i = right - 1; i >= left; --i) {
-                    result.add(matrix[bottom][i]);
+                //bottom
+                for (int j = right - 1; j >= left; j--) {
+                    result.add(matrix[bottom][j]);
+                    ++i;
                 }
             }
             
             if (left != right) {
-                for (int i = bottom - 1; i > top; --i) {
-                    result.add(matrix[i][left]);
+                //left
+                for (int j = bottom - 1; j > top; j--) {
+                    result.add(matrix[j][left]);
+                    ++i;
                 }
             }
             
-            ++left;
-            ++top;
-            --right;
-            --bottom;
         }
         return result;
     }
