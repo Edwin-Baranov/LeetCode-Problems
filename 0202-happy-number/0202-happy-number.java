@@ -1,20 +1,27 @@
 class Solution {
     public boolean isHappy(int n) {
-        if (n < 0) return false;
-        int temp = 0;
-        Set<Integer> history = new HashSet();
+        int slow = n;
+        int fast = getNext(n);
         
-        while (n != 1 && !history.contains(n)) {
-            history.add(n);
-            while (n != 0) {
-                temp += Math.pow(n % 10, 2);
-                n /= 10;
-            }
-        
-            n = temp;
-            temp = 0;
+        while (fast != 1 && slow != fast) {
+            slow = getNext(slow);
+            fast = getNext(getNext(fast));
         }
         
-        return n == 1;
+        return fast == 1;
+        
+    }
+    
+    private int getNext(int n) {
+        if (n < 2) return n;
+        
+        int result = 0;
+        
+        while (n != 0) {
+            int digit = n % 10;
+            n /= 10;
+            result += digit * digit;
+        }
+        return result;
     }
 }
