@@ -3,18 +3,15 @@ class Solution {
         if (s.length() != t.length())
             return false;
         
-        Map<Character, Integer> charCount = new HashMap();
+        int[] charCount = new int[26];
         
         for (char c : s.toCharArray()) {
-            charCount.put(c, charCount.getOrDefault(c, 0) + 1);
+            ++charCount[c - 'a'];
         }
         
         for (char c : t.toCharArray()) {
-            int count = charCount.getOrDefault(c, 0);
-            if (count == 0) {
+            if (charCount[c - 'a']-- == 0) {
                 return false;
-            } else {
-                charCount.put(c, --count);
             }
         }
         
