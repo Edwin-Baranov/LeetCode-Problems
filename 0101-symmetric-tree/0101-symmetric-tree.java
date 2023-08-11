@@ -15,28 +15,15 @@
  */
 class Solution {
     public boolean isSymmetric(TreeNode root) {
-        Queue<TreeNode> left = new LinkedList(), right = new LinkedList();
-        left.add(root.left);
-        right.add(root.right);
+        return isMirror(root, root);
+    }
+    
+    private boolean isMirror(TreeNode tree1, TreeNode tree2) {
+        if (tree1 == null && tree2 == null)
+            return true;
+        if (tree1 == null || tree2 == null)
+            return false;
         
-        while (!left.isEmpty() || !right.isEmpty()) {
-            TreeNode leftTree = left.poll(), rightTree = right.poll();
-            if (leftTree == null && rightTree == null)
-                continue;
-            if (leftTree == null || rightTree == null)
-                return false;
-            
-            if (leftTree.val == rightTree.val) {
-                left.add(leftTree.left);
-                right.add(rightTree.right);
-                
-                left.add(leftTree.right);
-                right.add(rightTree.left);
-            } else {
-                return false;
-            }
-        }
-        
-        return true;
+        return (tree1.val == tree2.val) && isMirror(tree1.left, tree2.right) && isMirror(tree1.right, tree2.left);
     }
 }
