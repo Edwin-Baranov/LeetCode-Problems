@@ -15,28 +15,30 @@
  */
 class BSTIterator {
     
-    Queue<TreeNode> queue;
+    LinkedList<TreeNode> list;
+    ListIterator iterator;
 
     public BSTIterator(TreeNode root) {
-        queue = new LinkedList<>();
-        addToQueue(root);        
+        list = new LinkedList<>();
+        addToList(root);    
+        iterator = list.listIterator();
     }
     
     public int next() {
-        return queue.poll().val;
+        return ((TreeNode) iterator.next()).val;
     }
     
     public boolean hasNext() {
-        return !queue.isEmpty();
+        return iterator.hasNext();
     }
     
-    private void addToQueue(TreeNode root) {
+    private void addToList(TreeNode root) {
         if (root == null)
             return;
         
-        addToQueue(root.left);
-        queue.add(root);
-        addToQueue(root.right);
+        addToList(root.left);
+        list.add(root);
+        addToList(root.right);
     }
 }
 
