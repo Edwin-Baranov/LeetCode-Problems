@@ -27,13 +27,10 @@ class Solution {
         if (root == null)
             return;
         
-        if (result.size() == depth) {
+        if (result.size() == depth)
             result.add(root.val);
-        } else {
-            result.set(depth, root.val);
-        }
         
-        lookupRight(root.left, depth + 1);
         lookupRight(root.right, depth + 1);
+        lookupRight(root.left, depth + 1);
     }
 }
