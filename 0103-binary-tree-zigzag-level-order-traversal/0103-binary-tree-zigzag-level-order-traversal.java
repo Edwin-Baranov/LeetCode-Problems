@@ -20,32 +20,27 @@ class Solution {
         if (root == null)
             return result;
         
-        Stack<TreeNode> processor = new Stack();
-        Stack<TreeNode> collector = new Stack();
-        
-        processor.push(root);
+        Queue<TreeNode> q = new LinkedList();
+        q.add(root);
         
         boolean leftToRight = true;
         
-        while (!processor.isEmpty()) {
-            List<Integer> order = new ArrayList();
+        while (!q.isEmpty()) {
+            int size = q.size();
+            LinkedList<Integer> order = new LinkedList();
             
-            while (!processor.isEmpty()) {
-                TreeNode node = processor.pop();
-                order.add(node.val);
+            for (int i = 0; i < size; i++) {
+                TreeNode node = q.poll();
                 
                 if (leftToRight) {
-                    if (node.left != null) collector.push(node.left);
-                    if (node.right != null) collector.push(node.right);
+                    order.addLast(node.val);
                 } else {
-                    if (node.right != null) collector.push(node.right);
-                    if (node.left != null) collector.push(node.left);
+                    order.addFirst(node.val);
                 }
+                
+                if (node.left != null) q.add(node.left);
+                if (node.right != null) q.add(node.right);
             }
-            
-            Stack<TreeNode> temp = collector;
-            collector = processor;
-            processor = temp;
             
             result.add(order);
             leftToRight = !leftToRight;
