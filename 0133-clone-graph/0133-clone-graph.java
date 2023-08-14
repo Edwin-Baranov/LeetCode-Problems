@@ -21,14 +21,14 @@ class Node {
 class Solution {
     Map<Node, Node> map;
     public Node cloneGraph(Node node) {
+        if (node == null)
+            return null;
+        
         map = new HashMap<>();
         return createClones(node);
     }
     
-    private Node createClones(Node node) {
-        if (node == null)
-            return null;
-        
+    private Node createClones(Node node) {        
         if (map.containsKey(node))
             return map.get(node);
         Node newNode = new Node(node.val);
