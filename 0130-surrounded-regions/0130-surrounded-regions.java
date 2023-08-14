@@ -33,8 +33,8 @@ class Solution {
         board[y][x] = 'E';
         
         isEdgeLand(board, y - 1, x);
-        isEdgeLand(board, y + 1, x);
         isEdgeLand(board, y, x - 1);
+        isEdgeLand(board, y + 1, x);
         isEdgeLand(board, y, x + 1);
     }
 }
