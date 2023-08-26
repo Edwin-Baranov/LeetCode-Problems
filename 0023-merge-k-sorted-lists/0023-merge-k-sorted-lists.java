@@ -13,14 +13,11 @@ class Solution {
         if (lists.length == 0)
             return null;
         
-        ArrayList<ListNode> sorter = new ArrayList<>();
+        PriorityQueue<ListNode> sorter = new PriorityQueue<>((a,b) -> a.val - b.val);
         
         for (ListNode list : lists) {
-            ListNode i = list;
-            while (i != null) {
-                sorter.add(i);
-                i = i.next;
-            }
+            if (list != null)
+                sorter.add(list);
         }
         
         int n = sorter.size();
@@ -28,14 +25,18 @@ class Solution {
         if (n == 0)
             return null;
         
-        sorter.sort((a,b) -> a.val - b.val);
+        ListNode dummy = new ListNode();
+        ListNode iterator = dummy;
         
-        for (int i = 1; i < n; i++) {
-            sorter.get(i-1).next = sorter.get(i);
+        while (sorter.peek() != null) {
+            ListNode temp = sorter.poll();
+            iterator.next = temp;
+            iterator = temp;
+            
+            if (iterator.next != null)
+                sorter.add(iterator.next);
         }
         
-        sorter.get(n - 1).next = null;
-        
-        return sorter.get(0);
+        return dummy.next;
     }
 }
