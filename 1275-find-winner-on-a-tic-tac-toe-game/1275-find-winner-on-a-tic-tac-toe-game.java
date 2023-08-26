@@ -1,34 +1,22 @@
 class Solution {
     public String tictactoe(int[][] moves) {
-        int m = moves.length;
-        int n = 3;
-        int[] rows = new int[n], cols = new int[n];
-        int diag = 0, anti_diag = 0;
-        
-        int player = -1;
-        
-        for (int[] move : moves){
-            player *= -1;
-            
-            int row = move[0], col = move[1];
+        int[] rows = new int[3], cols = new int[3];
+        int diagonal = 0, antiDiagonal = 0;
+        for (int i = 0; i < moves.length; ++i) {
+            int player = i % 2 == 0 ? 1 : -1;
+            int row = moves[i][0], col = moves[i][1];
             rows[row] += player;
             cols[col] += player;
-            
-            if (row == col){
-                diag += player;
+            if (row == col) {
+                diagonal += player;
             }
-            
-            if (row + col == n - 1){
-                anti_diag += player;
+            if (row + col == 2) {
+                antiDiagonal += player;
+            }
+            if (Math.abs(rows[row]) == 3 || Math.abs(cols[col]) == 3 || Math.abs(diagonal) == 3 || Math.abs(antiDiagonal) == 3) {
+                return player == 1 ? "A" : "B";
             }
         }
-        
-        
-        if (Math.abs(rows[moves[m-1][0]]) == n || Math.abs(cols[moves[m-1][1]]) == n || 
-            Math.abs(diag) == n || Math.abs(anti_diag) == n){
-            return player == 1 ? "A" : "B";
-        }
-        
-        return moves.length == n * n ? "Draw" : "Pending";
+        return moves.length == 9 ? "Draw" : "Pending";
     }
 }
