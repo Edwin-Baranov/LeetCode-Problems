@@ -1,15 +1,16 @@
 class Solution {
     public int[] fullBloomFlowers(int[][] flowers, int[] people) {
-        List<Integer> starts = new ArrayList();
-        List<Integer> ends = new ArrayList();
+        int n = flowers.length;
+        int[] starts = new int[n];
+        int[] ends = new int[n];
         
-        for (int[] flower: flowers) {
-            starts.add(flower[0]);
-            ends.add(flower[1] + 1);
+        for (int i = 0; i < n; ++i) {
+            starts[i] = flowers[i][0];
+            ends[i] = flowers[i][1] + 1;
         }
         
-        Collections.sort(starts);
-        Collections.sort(ends);
+        Arrays.sort(starts);
+        Arrays.sort(ends);
         int[] ans = new int[people.length];
         
         for (int index = 0; index < people.length; index++) {
@@ -22,12 +23,12 @@ class Solution {
         return ans;
     }
     
-    public int binarySearch(List<Integer> arr, int target) {
+    public int binarySearch(int[] arr, int target) {
         int left = 0;
-        int right = arr.size();
+        int right = arr.length;
         while (left < right) {
             int mid = (right - left) / 2 + left;
-            if (arr.get(mid) > target) {
+            if (arr[mid] > target) {
                 right = mid;
             } else {
                 left = mid + 1;
