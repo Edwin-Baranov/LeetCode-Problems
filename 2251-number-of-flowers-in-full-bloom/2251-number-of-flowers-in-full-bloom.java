@@ -1,30 +1,22 @@
 class Solution {
     public int[] fullBloomFlowers(int[][] flowers, int[] people) {
-        TreeMap<Integer, Integer> difference = new TreeMap<>();
-        difference.put(0, 0);
+        List<Integer> starts = new ArrayList();
+        List<Integer> ends = new ArrayList();
         
-        for (int[] flower : flowers) {
-            int start = flower[0];
-            int end = flower[1] + 1;
-            
-            difference.put(start, difference.getOrDefault(start, 0) + 1);
-            difference.put(end, difference.getOrDefault(end, 0) - 1);
+        for (int[] flower: flowers) {
+            starts.add(flower[0]);
+            ends.add(flower[1] + 1);
         }
         
-        List<Integer> positions = new ArrayList();
-        List<Integer> prefix = new ArrayList();
-        int curr = 0;
-        
-        for (int key : difference.keySet()) {
-            positions.add(key);
-            curr += difference.get(key);
-            prefix.add(curr);
-        }
-        
+        Collections.sort(starts);
+        Collections.sort(ends);
         int[] ans = new int[people.length];
-        for (int j = 0; j < people.length; j++) {
-            int i = binarySearch(positions, people[j]) - 1;
-            ans[j] = prefix.get(i);
+        
+        for (int index = 0; index < people.length; index++) {
+            int person = people[index];
+            int i = binarySearch(starts, person);
+            int j = binarySearch(ends, person);
+            ans[index] = i - j;
         }
         
         return ans;
@@ -34,8 +26,8 @@ class Solution {
         int left = 0;
         int right = arr.size();
         while (left < right) {
-            int mid = (left + right) / 2;
-            if (target < arr.get(mid)) {
+            int mid = (right - left) / 2 + left;
+            if (arr.get(mid) > target) {
                 right = mid;
             } else {
                 left = mid + 1;
