@@ -20,10 +20,13 @@ class Solution {
     }
 
     private int minDistance1D(List<Integer> points, int origin) {
-        int distance = 0;
-        for (int point : points) {
-            distance += Math.abs(point - origin);
+        int i = 0, j = points.size() - 1;
+        int result = 0;
+        while (i < j) {
+            result += points.get(j) - points.get(i);
+            i++;
+            j--;
         }
-        return distance;
+        return result;
     }
 }
