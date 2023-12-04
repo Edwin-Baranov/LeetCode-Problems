@@ -1,28 +1,40 @@
 class Solution {
     public String largestGoodInteger(String num) {
+        int windowSize = 3;
+        
         char[] chars = num.toCharArray();
         char currentChar = chars[0];
-        int subStart = 0; int subEnd = 0;
+        int windowStart = 0; int windowEnd = 0;
         int count = 1;
-        String result = "";
+        char result = '\0';
         
         for (int i = 1; i < chars.length; i++) {
-            if (chars[i] != currentChar || count == 3) {
+            if (chars[i] != currentChar || count == windowSize) {
+                if (i > chars.length - windowSize)
+                    break;
+                
                 currentChar = chars[i];
                 count = 1;
-                subStart = subEnd = i;
+                windowStart = windowEnd = i;
             } else {
-                subEnd = i;
+                windowEnd = i;
                 count++;
                 
-                if (count == 3) {
-                    String sub = num.substring(subStart, subEnd + 1);
-                    if (result == "" || sub.charAt(0) > result.charAt(0))
-                        result = sub;
+                if (count == windowSize) {
+                    if (currentChar > result)
+                        result = currentChar;
                 }
             }
         }
         
-        return result;
+        if (result == '\0') {
+            return "";
+        } else {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < windowSize; i++) {
+                sb.append(result);
+            }
+            return sb.toString();
+        }
     }
 }
