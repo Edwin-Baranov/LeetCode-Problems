@@ -4,7 +4,6 @@ class Solution {
         
         char[] chars = num.toCharArray();
         char currentChar = chars[0];
-        int windowStart = 0; int windowEnd = 0;
         int count = 1;
         char result = '\0';
         
@@ -15,9 +14,7 @@ class Solution {
                 
                 currentChar = chars[i];
                 count = 1;
-                windowStart = windowEnd = i;
             } else {
-                windowEnd = i;
                 count++;
                 
                 if (count == windowSize) {
