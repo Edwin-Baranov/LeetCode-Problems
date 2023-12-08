@@ -1,45 +1,44 @@
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        //Store number of incoming requirements for each node
-        int[] indegree = new int[numCourses];
-        //Store adj outgoing nodes
-        List<Integer>[] adj = new List[numCourses];
         
-        //Create new ArrayLists for outgoing adj nodes
-        for (int i = 0; i < numCourses; ++i) {
-            adj[i] = new ArrayList<>();
+        //Make lists of courses that potentialy unlock when index course is compleated
+        List<List<Integer>> unlocks = new ArrayList<>(numCourses);
+        for (int i = 0; i < numCourses; i++) {
+            unlocks.add(new ArrayList<>());
         }
-        
-        //Fill data
-        for (int[] prerequisite: prerequisites) {
-            adj[prerequisite[1]].add(prerequisite[0]);
-            ++indegree[prerequisite[0]];
+
+        for (int[] prerequisite : prerequisites) {
+            unlocks.get(prerequisite[1]).add(prerequisite[0]);
         }
-        
-        //Create new queue and populate it with all nodes that contain 0 incoming requirements
-        Queue<Integer> queue = new LinkedList<>();
-        for (int i = 0; i < numCourses; ++i) {
-            if (indegree[i] == 0) {
-                queue.offer(i);
+
+        boolean[] visit = new boolean[numCourses];
+        boolean[] inStack = new boolean[numCourses];
+        for (int i = 0; i < numCourses; i++) {
+            if (dfs(i, unlocks, visit, inStack)) {
+                return false;
             }
         }
-        
-        //Process through queue by counting number of nodes we've been through
-        //Removing an indegree count to all nodes adjasent to queued node
-        int nodesVisited = 0;
-        while (!queue.isEmpty()) {
-            int node = queue.poll();
-            ++nodesVisited;
-            
-            for (int neighbor : adj[node]) {
-                --indegree[neighbor];
-                if (indegree[neighbor] == 0) {
-                    queue.offer(neighbor);
-                }
+        return true;
+    }
+    
+    public boolean dfs(int node, List<List<Integer>> unlocks, boolean[] visit, boolean[] inStack) {
+        // If the node is already in the stack, we have a cycle.
+        if (inStack[node]) {
+            return true;
+        }
+        if (visit[node]) {
+            return false;
+        }
+        // Mark the current node as visited and part of current recursion stack.
+        visit[node] = true;
+        inStack[node] = true;
+        for (int neighbor : unlocks.get(node)) {
+            if (dfs(neighbor, unlocks, visit, inStack)) {
+                return true;
             }
         }
-        
-        //Once queue is finished we canFinish if we've visited all specified courses
-        return nodesVisited == numCourses;
+        // Remove the node from the stack.
+        inStack[node] = false;
+        return false;
     }
 }
