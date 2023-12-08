@@ -15,25 +15,28 @@
  */
 class Solution {
     public String tree2str(TreeNode root) {
+        StringBuilder result = new StringBuilder();
+        dfs(root, result);
+        return result.toString();
+    }
+
+    public static void dfs(TreeNode root, StringBuilder result) {
         if (root == null)
-            return "";
+            return;
         
-        String left = "";
-        String right = "";
+        result.append(String.valueOf(root.val));
         
-        if (root.left != null) {
-            left = "(" + tree2str(root.left) + ")";
-            
-            if (root.right != null) {
-                right = "(" + tree2str(root.right) + ")";
-            }
-        } else {
-            if (root.right != null) {
-                left = "()";
-                right = "(" + tree2str(root.right) + ")";
-            }
+        if (root.left == null && root.right == null)
+            return;
+        
+        result.append('(');
+        dfs(root.left, result);
+        result.append(')');
+        
+        if (root.right != null) {
+            result.append('(');
+            dfs(root.right, result);
+            result.append(')');
         }
-        
-        return root.val + left + right;
     }
 }
