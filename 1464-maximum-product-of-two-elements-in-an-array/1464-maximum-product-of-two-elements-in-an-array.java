@@ -3,7 +3,7 @@ class Solution {
         int first = 0, second = 0;
         
         for (int val : nums) {
-             if (val >= first) {
+             if (val > first) {
                  second = first;
                  first = val;
              } else {
