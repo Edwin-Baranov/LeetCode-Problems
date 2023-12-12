@@ -1,16 +1,48 @@
 class Solution {
     public int findSpecialInteger(int[] arr) {
-        int twentyFivePercent = arr.length / 4;
-        Map<Integer, Integer> counter = new HashMap<>();
+        int n = arr.length;
+        int quarterCount = n / 4;
+        int[] targets = {arr[quarterCount], arr[n / 2], arr[3 * n / 4]};
         
-        for (int val : arr) {
-            int count = counter.getOrDefault(val, 0) + 1;
-            if (count > twentyFivePercent)
+        for (int val : targets) {
+            if (upperBound(arr, val) - lowerBound(arr, val) > quarterCount)
                 return val;
-            
-            counter.put(val, count);
         }
         
         return -1;
+    }
+    
+    private int lowerBound(int[] arr, int target) {
+        int left = 0;
+        int right = arr.length;
+        
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            
+            if (arr[mid] >= target) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        
+        return left;
+    }
+    
+    private int upperBound(int[] arr, int target) {
+        int left = 0;
+        int right = arr.length;
+        
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            
+            if (arr[mid] > target) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        
+        return left;
     }
 }
