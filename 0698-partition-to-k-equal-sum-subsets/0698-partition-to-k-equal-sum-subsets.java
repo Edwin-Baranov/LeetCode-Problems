@@ -14,22 +14,22 @@ class Solution {
         Arrays.sort(nums);
         
         int target = totalSum / k;
-        ArrayList<Boolean> used = new ArrayList<>(Collections.nCopies(n, false));
-        Map<ArrayList<Boolean>, Boolean> memo = new HashMap<>();
+        Integer mask = 0;
+        Map<Integer, Boolean> memo = new HashMap<>();
         
-        return canPartition(nums, used, memo, target, k, 0, n - 1);
+        return canPartition(nums, mask, memo, target, k, 0, n - 1);
     }
     
-    private boolean canPartition(int[] nums, ArrayList<Boolean> used, Map<ArrayList<Boolean>, Boolean> memo, int target, int k, int sum, int index) {        
+    private boolean canPartition(int[] nums, Integer mask, Map<Integer, Boolean> memo, int target, int k, int sum, int index) {        
         if (k == 1)
             return true;
         
-        if (memo.containsKey(used))
-            return memo.get(used);
+        if (memo.containsKey(mask))
+            return memo.get(mask);
         
         if (sum == target) {
-            boolean answer = canPartition(nums, used, memo, target, k-1, 0, nums.length - 1);
-            memo.put(used, answer);
+            boolean answer = canPartition(nums, mask, memo, target, k-1, 0, nums.length - 1);
+            memo.put(mask, answer);
             return answer;
         }
         
@@ -37,17 +37,17 @@ class Solution {
             if (nums[index] > target)
                 return false;
             
-            if (!used.get(i) && sum + nums[i] <= target) {
-                used.set(i, true);
+            if (((mask >> i) & 1) == 0 && sum + nums[i] <= target) {
+                mask = (mask | 1 << i);
                 
-                if (canPartition(nums, used, memo, target, k, sum + nums[i], i - 1))
+                if (canPartition(nums, mask, memo, target, k, sum + nums[i], i - 1))
                     return true;
                     
-                used.set(i, false);
+                mask = (mask ^ (1 << i));
             }
         }
         
-        memo.put(used, false);
+        memo.put(mask, false);
         return false;
     }
 }
