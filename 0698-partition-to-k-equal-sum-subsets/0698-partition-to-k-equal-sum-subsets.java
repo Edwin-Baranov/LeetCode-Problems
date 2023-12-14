@@ -20,7 +20,7 @@ class Solution {
     }
     
     private boolean canPartition(int[] nums, boolean[] used, int target, int k, int sum, int index) {        
-        if (k == 0)
+        if (k == 1)
             return true;
         
         if (sum == target)
