@@ -14,32 +14,40 @@ class Solution {
         Arrays.sort(nums);
         
         int target = totalSum / k;
-        boolean[] used = new boolean[n];
+        ArrayList<Boolean> used = new ArrayList<>(Collections.nCopies(n, false));
+        Map<ArrayList<Boolean>, Boolean> memo = new HashMap<>();
         
-        return canPartition(nums, used, target, k, 0, n - 1);
+        return canPartition(nums, used, memo, target, k, 0, n - 1);
     }
     
-    private boolean canPartition(int[] nums, boolean[] used, int target, int k, int sum, int index) {        
+    private boolean canPartition(int[] nums, ArrayList<Boolean> used, Map<ArrayList<Boolean>, Boolean> memo, int target, int k, int sum, int index) {        
         if (k == 1)
             return true;
         
-        if (sum == target)
-            return canPartition(nums, used, target, k-1, 0, nums.length - 1);
+        if (memo.containsKey(used))
+            return memo.get(used);
+        
+        if (sum == target) {
+            boolean answer = canPartition(nums, used, memo, target, k-1, 0, nums.length - 1);
+            memo.put(used, answer);
+            return answer;
+        }
         
         for (int i = index; i >= 0; i--) {
             if (nums[index] > target)
                 return false;
             
-            if (!used[i] && sum + nums[i] <= target) {
-                used[i] = true;
+            if (!used.get(i) && sum + nums[i] <= target) {
+                used.set(i, true);
                 
-                if (canPartition(nums, used, target, k, sum + nums[i], i - 1))
+                if (canPartition(nums, used, memo, target, k, sum + nums[i], i - 1))
                     return true;
                     
-                used[i] = false;
+                used.set(i, false);
             }
         }
         
+        memo.put(used, false);
         return false;
     }
 }
