@@ -1,19 +1,8 @@
 class Solution {
     public int maxProductDifference(int[] nums) {
-        PriorityQueue<Integer> max = new PriorityQueue();
-        PriorityQueue<Integer> min = new PriorityQueue(Collections.reverseOrder());
+        int n = nums.length;
+        Arrays.sort(nums);
         
-        for (int num : nums) {
-            addToPriority(max, num);
-            addToPriority(min, num);
-        }
-        
-        return (max.poll() * max.poll()) - (min.poll() * min.poll());
-    }
-    
-    private void addToPriority(PriorityQueue<Integer> pQueue, Integer input) {
-        pQueue.add(input);
-        while (pQueue.size() > 2)
-            pQueue.poll();
+        return (nums[n - 1] * nums[n - 2]) - (nums[0] * nums[1]);
     }
 }
