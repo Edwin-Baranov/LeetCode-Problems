@@ -2,19 +2,30 @@ class Solution {
     public int[][] imageSmoother(int[][] img) {
         int m = img.length;
         int n = img[0].length;
-        
-        int[][] result = new int[m][n];
+        int encoder = 256;
         
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                applyAvg(img, result, i, j);
+                img[i][j] *= encoder;
             }
         }
         
-        return result;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                applyAvg(img, i, j, encoder);
+            }
+        }
+        
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                img[i][j] %= encoder;
+            }
+        }
+        
+        return img;
     }
     
-    private void applyAvg(int[][] img, int[][] result, int row, int col) {
+    private void applyAvg(int[][] img, int row, int col, int encoder) {
         int count = 0;
         int sum = 0;
         int targetRow, targetCol;
@@ -28,10 +39,10 @@ class Solution {
                     continue;
                 
                 count++;
-                sum += img[targetRow][targetCol];
+                sum += img[targetRow][targetCol] / encoder;
             }
         }
         
-        result[row][col] = sum / count;
+        img[row][col] += sum / count;
     }
 }
