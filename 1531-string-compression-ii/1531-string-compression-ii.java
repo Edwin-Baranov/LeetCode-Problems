@@ -13,7 +13,7 @@ class Solution {
         if (index == s.length())
             return 0;
         
-        int key = index * 101 * 27 * 101 + (lastChar - 'a') * 101 * 101 + lastCharCount * 101 + k;
+        int key = (index << 24) | (lastChar - 'a' << 16) | (lastCharCount << 8) | k;
         
         if (memo.containsKey(key)) {
             return memo.get(key);
