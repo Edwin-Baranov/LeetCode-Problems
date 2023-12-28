@@ -8,7 +8,7 @@ class Solution {
     
     private int dp(String s, int index, char lastChar, int lastCharCount, int k) {
         if (k < 0)
-            return Integer.MAX_VALUE / 2;
+            return Integer.MAX_VALUE;
         
         if (index == s.length())
             return 0;
