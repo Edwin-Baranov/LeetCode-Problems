@@ -1,36 +1,37 @@
 class Solution {
-    private Map<Integer, Integer> memo = new HashMap<>();
-    private Set<Integer> add = Set.of(1, 9, 99);
+    int[][] memo;
     
     public int getLengthOfOptimalCompression(String s, int k) {
-        return dp(s, 0, (char) ('a' + 26), 0, k);
+        memo = new int[s.length()][k+1];
+        
+        for (int[] row : memo)
+            Arrays.fill(row, -1);
+        
+        return dp(s, 0, k);
     }
     
-    private int dp(String s, int index, char lastChar, int lastCharCount, int k) {
-        if (k < 0)
-            return Integer.MAX_VALUE;
+    private int dp(String s, int index, int k) {
+        int n = s.length();
+        if (k < 0) return n;
+        if (n <= index + k) return 0;
         
-        if (index == s.length())
-            return 0;
+        int result = memo[index][k];
+        if (result != -1) return result;
         
-        int key = (index << 24) | (lastChar - 'a' << 16) | (lastCharCount << 8) | k;
+        result = dp(s, index + 1, k - 1);
+        int length = 0, same = 0, diff = 0;
         
-        if (memo.containsKey(key)) {
-            return memo.get(key);
+        for (int j = index; j < n && diff <= k; j++) {
+            
+            if (s.charAt(j) == s.charAt(index)) {
+                same++;
+                if (same <= 2 || same == 10 || same == 100) length++;
+            } else {
+                diff++; 
+            }
+            result = Math.min(result, length + dp(s, j + 1, k - diff)); 
         }
-        
-        int keepChar;
-        int deleteChar = dp(s, index + 1, lastChar, lastCharCount, k - 1);
-        
-        if (s.charAt(index) == lastChar) {
-            keepChar = dp(s, index + 1, lastChar, lastCharCount + 1, k) + (add.contains(lastCharCount) ? 1 : 0);
-        } else {
-            keepChar = dp(s, index + 1, s.charAt(index), 1, k) + 1;
-        }
-        
-        int result = Math.min(keepChar, deleteChar);
-        memo.put(key, result);
-        
+        memo[index][k] = result;
         return result;
     }
 }
