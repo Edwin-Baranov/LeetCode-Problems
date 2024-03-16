@@ -5,7 +5,15 @@ func maxRepeating(sequence string, word string) int {
     count := 0
     
     for i := 0; i < lastI; {
-        if (containsWord(sequence, word, i)) {
+        match := true
+        for j := 0; j < wordLen; j++ {
+            if (sequence[i + j] != word[j]) {
+                match = false
+                break
+            }
+        }
+            
+        if (match) {
             count++
             i += wordLen
         } else {
@@ -19,14 +27,4 @@ func maxRepeating(sequence string, word string) int {
         maxSequence = max(maxSequence, count)
     }
     return maxSequence
-}
-
-func containsWord(sequence string, word string, start int) bool {
-    for i := 0; i < len(word); i++ {
-        if (sequence[i + start] != word[i]) {
-            return false
-        }
-    }
-    
-    return true
 }
