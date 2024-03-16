@@ -9,6 +9,7 @@ func maxRepeating(sequence string, word string) int {
     for i := 0; i < halfWordLen; i++ {
         if (word[i] != word[wordLen - i - 1]) {
             overlap = i
+            break
         }
     }
     
