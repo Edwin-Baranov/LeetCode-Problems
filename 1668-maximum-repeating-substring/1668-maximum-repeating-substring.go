@@ -3,16 +3,14 @@ func maxRepeating(sequence string, word string) int {
     lastI := len(sequence) - wordLen + 1
     maxSequence := 0
     count := 0
-    mem := 0
     
     for i := 0; i < lastI; {
         if (containsWord(sequence, word, i)) {
-            mem = i
             count++
             i += wordLen
         } else {
             if (count > 0) {
-                i = mem + 1
+                i = i - wordLen + 1
             } else {
                 i++
             }
