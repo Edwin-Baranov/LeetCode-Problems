@@ -3,6 +3,13 @@ func maxRepeating(sequence string, word string) int {
     lastI := len(sequence) - wordLen + 1
     maxSequence := 0
     count := 0
+    overlap := 0
+    
+    for i := 0; i < wordLen / 2; i++ {
+        if (word[i] != word[wordLen - i - 1]) {
+            overlap = i
+        }
+    }
     
     for i := 0; i < lastI; {
         match := true
@@ -18,7 +25,7 @@ func maxRepeating(sequence string, word string) int {
             i += wordLen
         } else {
             if (count > 0) {
-                i = i - wordLen + 1
+                i = i - overlap
             } else {
                 i++
             }
